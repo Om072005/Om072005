@@ -72,36 +72,7 @@
 
 ###
 
-<!-- READINESS:START -->
-
-## Engineering Readiness Radar
-**Score:** 🔴 **31/100** — *Early-stage*  
-**Last check:** 2026-03-01 19:14 UTC
-
-**Strong signals**
-- Kubernetes manifests
-- CI workflows present
-- Lint/format tool (ruff/black/flake8/pre-commit)
-- Docs (README/ docs/)
-
-**Biggest gaps**
-- Python project file (pyproject/requirements)
-- FastAPI entrypoint (app/main.py etc.)
-- Tests folder
-- Dockerfile
-- Docker Compose
-- Security scan (trivy/bandit/safety/dependabot)
-- License
-- Env example (.env.example)
-- …
-
-**Next actions (high impact, low effort)**
-- Tests folder
-- Dockerfile
-- Security scan (trivy/bandit/safety/dependabot)
-- Python project file (pyproject/requirements)
-
-<!-- READINESS:END -->
+<img src="assets/devops-pulse.svg" width="800" alt="DevOps Pulse (pipeline status)"/>
 
 ###
 
