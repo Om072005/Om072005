@@ -139,12 +139,20 @@ jobs:
 
       - name: Commit changes (if any)
         run: |
-          if git diff --quiet; then
+          git status --porcelain
+          if git diff --quiet && git status --porcelain | grep -qv "^"; then
             echo "No changes to commit."
+          fi
+
+          # Always stage the assets folder (covers new file + updates)
+          git add assets || true
+
+          if git diff --cached --quiet; then
+            echo "Nothing staged."
             exit 0
           fi
+
           git config user.name "devops-pulse[bot]"
           git config user.email "devops-pulse[bot]@users.noreply.github.com"
-          git add assets/devops-pulse.svg
           git commit -m "chore: update devops pulse"
           git push origin HEAD:main
