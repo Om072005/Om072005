@@ -39,7 +39,7 @@ jobs:
             r = re.compile(rx)
             return any(r.search(f) for f in files)
 
-          # Signals (no stats, just presence-based meaning)
+          # Presence-based signals (no stats)
           signals = [
             ("Code", True),
             ("API", has(r"fastapi") or has(r"(^|/)main\.py$") or has(r"(^|/)app/")),
@@ -50,83 +50,123 @@ jobs:
             ("Ship", has(r"(^|/)\.github/workflows/") or has(r"(^|/)ci") or has(r"cd")),
           ]
 
-          # Build an animated SVG “pulse” pipeline
-          w, h = 980, 170
-          x0, y = 60, 85
+          n = len(signals)
+
+          # Canvas
+          w, h = 980, 180
+          x0, y = 70, 95
           gap = 130
-          r = 18
 
-          def stage_color(ok: bool):
-            return "#35d07f" if ok else "#2a2f3a"
+          # Pixel node sizes
+          node_w, node_h = 44, 28
+          px = 4  # "pixel" size for inner blocks
 
-          def text_color(ok: bool):
-            return "#e6eef8" if ok else "#7b8798"
+          def stage_fill(ok: bool):
+            return "#35d07f" if ok else "#263041"   # active vs dim
 
-          circles = []
-          labels = []
+          def stage_stroke(ok: bool):
+            return "#2be38d" if ok else "#3a4252"
+
+          def label_fill(ok: bool):
+            return "#e6eef8" if ok else "#93a1b5"
+
+          # Build sequential keyframes: each node gets a short bright window
+          step = 100 / n
+          def keyframes_for(i: int) -> str:
+            start = i * step
+            mid = start + step * 0.45
+            end = start + step * 0.95
+            # subtle brighten + tiny glow, then back
+            return f"""
+            @keyframes pulse{i} {{
+              0% {{ opacity: 0.55; filter: none; }}
+              {start:.3f}% {{ opacity: 0.55; filter: none; }}
+              {mid:.3f}% {{ opacity: 1.0; filter: drop-shadow(0 0 6px rgba(53,208,127,0.35)); }}
+              {end:.3f}% {{ opacity: 0.55; filter: none; }}
+              100% {{ opacity: 0.55; filter: none; }}
+            }}
+            """
+
+          css_keyframes = "\n".join(keyframes_for(i) for i in range(n))
+          css_nodes = "\n".join([f".node{i} {{ animation: pulse{i} 7.0s linear infinite; }}" for i in range(n)])
+
+          # SVG parts
           lines = []
+          nodes = []
+          labels = []
+
+          # Connecting line style (pixel-ish)
+          for i in range(n - 1):
+            x = x0 + i * gap
+            x2 = x0 + (i + 1) * gap
+            lines.append(
+              f'<rect x="{x + node_w//2 + 8}" y="{y - 4}" width="{(x2 - x) - node_w - 16}" height="8" rx="2" '
+              f'fill="#2a3446" opacity="0.9" />'
+            )
 
           for i, (name, ok) in enumerate(signals):
             x = x0 + i * gap
-            circles.append(f'<circle cx="{x}" cy="{y}" r="{r}" fill="{stage_color(ok)}" opacity="0.95"/>')
-            labels.append(f'<text x="{x}" y="{y+45}" text-anchor="middle" font-size="14" fill="{text_color(ok)}">{name}</text>')
-            if i < len(signals) - 1:
-              x2 = x0 + (i+1) * gap
-              lines.append(f'<line x1="{x+r+10}" y1="{y}" x2="{x2-r-10}" y2="{y}" stroke="#3a4252" stroke-width="6" stroke-linecap="round" opacity="0.85"/>')
 
-          # Animated scan bar
-          scan = f"""
-          <defs>
-            <linearGradient id="scanGrad" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
-              <stop offset="50%" stop-color="#9ad7ff" stop-opacity="0.55"/>
-              <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-            </linearGradient>
-            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="6" result="blur"/>
-              <feMerge>
-                <feMergeNode in="blur"/>
-                <feMergeNode in="SourceGraphic"/>
-              </feMerge>
-            </filter>
-            <style>
-              .scan {{
-                animation: move 3.2s linear infinite;
-              }}
-              @keyframes move {{
-                0%   {{ transform: translateX(-120px); opacity: 0.0; }}
-                10%  {{ opacity: 0.35; }}
-                50%  {{ opacity: 0.55; }}
-                90%  {{ opacity: 0.35; }}
-                100% {{ transform: translateX({w+120}px); opacity: 0.0; }}
-              }}
-              .title {{
-                font: 700 18px system-ui, -apple-system, Segoe UI, Roboto, Arial;
-                fill: #e6eef8;
-              }}
-              .sub {{
-                font: 500 13px system-ui, -apple-system, Segoe UI, Roboto, Arial;
-                fill: #97a6ba;
-              }}
-            </style>
-          </defs>
+            # Outer "pixel tile"
+            fill = stage_fill(ok)
+            stroke = stage_stroke(ok)
 
-          <rect x="22" y="24" width="{w-44}" height="{h-48}" rx="18" fill="#0b1220" stroke="#1d2840" stroke-width="2"/>
-          <text x="48" y="56" class="title">DevOps Pulse</text>
-          <text x="48" y="76" class="sub">Animated pipeline signals (no stats)</text>
+            # Inner pixels (gives pixel-art feel)
+            inner = []
+            ix0 = x - (node_w // 2) + 6
+            iy0 = y - (node_h // 2) + 6
+            cols = (node_w - 12) // px
+            rows = (node_h - 12) // px
 
-          <g class="scan" filter="url(#glow)">
-            <rect x="-120" y="{y-34}" width="160" height="68" fill="url(#scanGrad)"/>
-          </g>
-          """
+            # simple checker pattern
+            for r_i in range(rows):
+              for c_i in range(cols):
+                if (r_i + c_i) % 2 == 0:
+                  inner.append(
+                    f'<rect x="{ix0 + c_i*px}" y="{iy0 + r_i*px}" width="{px}" height="{px}" '
+                    f'fill="#0b1220" opacity="0.12" />'
+                  )
 
-          svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">
-          {scan}
-          <g>
-            {''.join(lines)}
-            {''.join(circles)}
-            {''.join(labels)}
-          </g>
+            nodes.append(
+              f'''
+              <g class="node node{i}">
+                <rect x="{x - node_w//2}" y="{y - node_h//2}" width="{node_w}" height="{node_h}" rx="6"
+                      fill="{fill}" stroke="{stroke}" stroke-width="2" opacity="0.85"/>
+                {''.join(inner)}
+              </g>
+              '''
+            )
+
+            labels.append(
+              f'<text x="{x}" y="{y + 48}" text-anchor="middle" font-size="14" fill="{label_fill(ok)}">{name}</text>'
+            )
+
+          svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" shape-rendering="crispEdges">
+            <defs>
+              <style>
+                .title {{
+                  font: 800 18px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+                  fill: #e6eef8;
+                }}
+                .sub {{
+                  font: 500 13px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+                  fill: #97a6ba;
+                }}
+                .node {{ opacity: 0.55; }}
+                {css_keyframes}
+                {css_nodes}
+              </style>
+            </defs>
+
+            <rect x="22" y="22" width="{w-44}" height="{h-44}" rx="18" fill="#0b1220" stroke="#1d2840" stroke-width="2"/>
+            <text x="48" y="52" class="title">DevOps Pulse</text>
+            <text x="48" y="72" class="sub">calm step-by-step signal (no stats)</text>
+
+            <g>
+              {''.join(lines)}
+              {''.join(nodes)}
+              {''.join(labels)}
+            </g>
           </svg>
           """
 
@@ -139,19 +179,11 @@ jobs:
 
       - name: Commit changes (if any)
         run: |
-          git status --porcelain
-          if git diff --quiet && git status --porcelain | grep -qv "^"; then
-            echo "No changes to commit."
-          fi
-
-          # Always stage the assets folder (covers new file + updates)
           git add assets || true
-
           if git diff --cached --quiet; then
             echo "Nothing staged."
             exit 0
           fi
-
           git config user.name "devops-pulse[bot]"
           git config user.email "devops-pulse[bot]@users.noreply.github.com"
           git commit -m "chore: update devops pulse"
