@@ -97,22 +97,22 @@ jobs:
           def bullet(items):
             return "\n".join([f"- {i}" for i in items]) if items else "- (none)"
 
-          report = f"""
-          ## Engineering Readiness Radar
-          **Score:** {emoji} **{pct}/100** — *{level}*  
-          **Last check:** {now}
+          more_strengths = "\n- …" if len(strengths) > 8 else ""
+          more_gaps = "\n- …" if len(gaps) > 8 else ""
 
-          **Strong signals**
-          {bullet(strengths[:8])}
-          {"\n- …" if len(strengths) > 8 else ""}
-
-          **Biggest gaps**
-          {bullet(gaps[:8])}
-          {"\n- …" if len(gaps) > 8 else ""}
-
-          **Next actions (high impact, low effort)**
-          {bullet(next_actions)}
-          """.strip() + "\n"
+          report = (
+            "## Engineering Readiness Radar\n"
+            f"**Score:** {emoji} **{pct}/100** — *{level}*  \n"
+            f"**Last check:** {now}\n\n"
+            "**Strong signals**\n"
+            f"{bullet(strengths[:8])}"
+            f"{more_strengths}\n\n"
+            "**Biggest gaps**\n"
+            f"{bullet(gaps[:8])}"
+            f"{more_gaps}\n\n"
+            "**Next actions (high impact, low effort)**\n"
+            f"{bullet(next_actions)}\n"
+          )
 
           # Update README between markers
           readme_path = ROOT / "README.md"
