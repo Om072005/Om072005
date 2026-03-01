@@ -35,13 +35,13 @@ jobs:
             return any(r.search(f) for f in files)
 
           steps = [
-            ("CODE", True),
-            ("API", has(r"fastapi") or has(r"(^|/)main\.py$") or has(r"(^|/)app/")),
-            ("TESTS", has(r"(^|/)tests/") or has(r"pytest")),
-            ("CONTAINER", has(r"(^|/)dockerfile$") or has(r"docker")),
-            ("CLOUD", has(r"(^|/)(k8s|kubernetes)/") or has(r"helm") or has(r"kind:\s*deployment")),
-            ("SECURITY", has(r"trivy|bandit|safety|dependabot|codeql")),
-            ("SHIP", has(r"(^|/)\.github/workflows/") or has(r"(^|/)ci") or has(r"cd")),
+            ("Definition", True),
+            ("Data Collection ", has(r"fastapi") or has(r"(^|/)main\.py$") or has(r"(^|/)app/")),
+            ("Model Dev", has(r"(^|/)tests/") or has(r"pytest")),
+            ("Model Eval", has(r"(^|/)dockerfile$") or has(r"docker")),
+            ("Deployment", has(r"(^|/)(k8s|kubernetes)/") or has(r"helm") or has(r"kind:\s*deployment")),
+            ("Maintenance", has(r"trivy|bandit|safety|dependabot|codeql")),
+            ("Iterative Dev", has(r"(^|/)\.github/workflows/") or has(r"(^|/)ci") or has(r"cd")),
           ]
 
           n = len(steps)
@@ -198,7 +198,7 @@ jobs:
             <!-- Title -->
             <text x="48" y="52" class="title">&lt; workflow? maybe: /&gt;</text>
             <text x="308" y="52" class="title cursor">▮</text>
-            <text x="48" y="74" class="sub">pixel vibe • calm loop • no stats</text>
+            
 
             <!-- Timeline -->
             <g>
