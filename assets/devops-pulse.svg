@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="170" viewBox="0 0 980 170">
+
+<defs>
+  <linearGradient id="scanGrad" x1="0" x2="1" y1="0" y2="0">
+    <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+    <stop offset="50%" stop-color="#9ad7ff" stop-opacity="0.55"/>
+    <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+  </linearGradient>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="6" result="blur"/>
+    <feMerge>
+      <feMergeNode in="blur"/>
+      <feMergeNode in="SourceGraphic"/>
+    </feMerge>
+  </filter>
+  <style>
+    .scan {
+      animation: move 3.2s linear infinite;
+    }
+    @keyframes move {
+      0%   { transform: translateX(-120px); opacity: 0.0; }
+      10%  { opacity: 0.35; }
+      50%  { opacity: 0.55; }
+      90%  { opacity: 0.35; }
+      100% { transform: translateX(1100px); opacity: 0.0; }
+    }
+    .title {
+      font: 700 18px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      fill: #e6eef8;
+    }
+    .sub {
+      font: 500 13px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      fill: #97a6ba;
+    }
+  </style>
+</defs>
+
+<rect x="22" y="24" width="936" height="122" rx="18" fill="#0b1220" stroke="#1d2840" stroke-width="2"/>
+<text x="48" y="56" class="title">DevOps Pulse</text>
+<text x="48" y="76" class="sub">Animated pipeline signals (no stats)</text>
+
+<g class="scan" filter="url(#glow)">
+  <rect x="-120" y="51" width="160" height="68" fill="url(#scanGrad)"/>
+</g>
+
+<g>
+  <line x1="88" y1="85" x2="162" y2="85" stroke="#3a4252" stroke-width="6" stroke-linecap="round" opacity="0.85"/><line x1="218" y1="85" x2="292" y2="85" stroke="#3a4252" stroke-width="6" stroke-linecap="round" opacity="0.85"/><line x1="348" y1="85" x2="422" y2="85" stroke="#3a4252" stroke-width="6" stroke-linecap="round" opacity="0.85"/><line x1="478" y1="85" x2="552" y2="85" stroke="#3a4252" stroke-width="6" stroke-linecap="round" opacity="0.85"/><line x1="608" y1="85" x2="682" y2="85" stroke="#3a4252" stroke-width="6" stroke-linecap="round" opacity="0.85"/><line x1="738" y1="85" x2="812" y2="85" stroke="#3a4252" stroke-width="6" stroke-linecap="round" opacity="0.85"/>
+  <circle cx="60" cy="85" r="18" fill="#35d07f" opacity="0.95"/><circle cx="190" cy="85" r="18" fill="#2a2f3a" opacity="0.95"/><circle cx="320" cy="85" r="18" fill="#2a2f3a" opacity="0.95"/><circle cx="450" cy="85" r="18" fill="#2a2f3a" opacity="0.95"/><circle cx="580" cy="85" r="18" fill="#2a2f3a" opacity="0.95"/><circle cx="710" cy="85" r="18" fill="#2a2f3a" opacity="0.95"/><circle cx="840" cy="85" r="18" fill="#35d07f" opacity="0.95"/>
+  <text x="60" y="130" text-anchor="middle" font-size="14" fill="#e6eef8">Code</text><text x="190" y="130" text-anchor="middle" font-size="14" fill="#7b8798">API</text><text x="320" y="130" text-anchor="middle" font-size="14" fill="#7b8798">Tests</text><text x="450" y="130" text-anchor="middle" font-size="14" fill="#7b8798">Container</text><text x="580" y="130" text-anchor="middle" font-size="14" fill="#7b8798">Cloud/K8s</text><text x="710" y="130" text-anchor="middle" font-size="14" fill="#7b8798">Security</text><text x="840" y="130" text-anchor="middle" font-size="14" fill="#e6eef8">Ship</text>
+</g>
+</svg>
