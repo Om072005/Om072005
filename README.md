@@ -72,7 +72,7 @@
 
 ###
 
-<img src="https://raw.githubusercontent.com/Om072005/Om072005/main/assets/devops-pulse-v2.svg" alt="DevOps Pulse" />
+<img src="https://raw.githubusercontent.com/Om072005/Om072005/main/assets/workflow-retro.svg" alt="Workflow Retro" />
 
 ###
 
