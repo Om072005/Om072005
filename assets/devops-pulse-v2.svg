@@ -84,8 +84,8 @@
   </defs>
 
   <rect x="22" y="22" width="936" height="136" rx="18" fill="#0b1220" stroke="#1d2840" stroke-width="2"/>
-  <text x="48" y="52" class="title">DevOps Pulse</text>
-  <text x="48" y="72" class="sub">calm step-by-step signal (no stats)</text>
+  <text x="48" y="52" class="title">Workflow ? Maybe : </text>
+  
 
   <g>
     <rect x="100" y="91" width="70" height="8" rx="2" fill="#2a3446" opacity="0.9" /><rect x="230" y="91" width="70" height="8" rx="2" fill="#2a3446" opacity="0.9" /><rect x="360" y="91" width="70" height="8" rx="2" fill="#2a3446" opacity="0.9" /><rect x="490" y="91" width="70" height="8" rx="2" fill="#2a3446" opacity="0.9" /><rect x="620" y="91" width="70" height="8" rx="2" fill="#2a3446" opacity="0.9" /><rect x="750" y="91" width="70" height="8" rx="2" fill="#2a3446" opacity="0.9" />
