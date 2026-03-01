@@ -1,0 +1,150 @@
+name: DevOps Pulse (animated README)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  schedule:
+    - cron: "0 2 * * 1"  # Monday 02:00 UTC
+
+permissions:
+  contents: write
+
+jobs:
+  pulse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate animated SVG
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path(".")
+          files = [str(p).lower() for p in root.rglob("*") if p.is_file()]
+
+          def has(rx: str) -> bool:
+            r = re.compile(rx)
+            return any(r.search(f) for f in files)
+
+          # Signals (no stats, just presence-based meaning)
+          signals = [
+            ("Code", True),
+            ("API", has(r"fastapi") or has(r"(^|/)main\.py$") or has(r"(^|/)app/")),
+            ("Tests", has(r"(^|/)tests/") or has(r"pytest")),
+            ("Container", has(r"(^|/)dockerfile$") or has(r"docker")),
+            ("Cloud/K8s", has(r"(^|/)(k8s|kubernetes)/") or has(r"helm") or has(r"kind:\s*deployment")),
+            ("Security", has(r"trivy|bandit|safety|dependabot|codeql")),
+            ("Ship", has(r"(^|/)\.github/workflows/") or has(r"(^|/)ci") or has(r"cd")),
+          ]
+
+          # Build an animated SVG “pulse” pipeline
+          w, h = 980, 170
+          x0, y = 60, 85
+          gap = 130
+          r = 18
+
+          def stage_color(ok: bool):
+            return "#35d07f" if ok else "#2a2f3a"
+
+          def text_color(ok: bool):
+            return "#e6eef8" if ok else "#7b8798"
+
+          circles = []
+          labels = []
+          lines = []
+
+          for i, (name, ok) in enumerate(signals):
+            x = x0 + i * gap
+            circles.append(f'<circle cx="{x}" cy="{y}" r="{r}" fill="{stage_color(ok)}" opacity="0.95"/>')
+            labels.append(f'<text x="{x}" y="{y+45}" text-anchor="middle" font-size="14" fill="{text_color(ok)}">{name}</text>')
+            if i < len(signals) - 1:
+              x2 = x0 + (i+1) * gap
+              lines.append(f'<line x1="{x+r+10}" y1="{y}" x2="{x2-r-10}" y2="{y}" stroke="#3a4252" stroke-width="6" stroke-linecap="round" opacity="0.85"/>')
+
+          # Animated scan bar
+          scan = f"""
+          <defs>
+            <linearGradient id="scanGrad" x1="0" x2="1" y1="0" y2="0">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+              <stop offset="50%" stop-color="#9ad7ff" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+            <style>
+              .scan {{
+                animation: move 3.2s linear infinite;
+              }}
+              @keyframes move {{
+                0%   {{ transform: translateX(-120px); opacity: 0.0; }}
+                10%  {{ opacity: 0.35; }}
+                50%  {{ opacity: 0.55; }}
+                90%  {{ opacity: 0.35; }}
+                100% {{ transform: translateX({w+120}px); opacity: 0.0; }}
+              }}
+              .title {{
+                font: 700 18px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+                fill: #e6eef8;
+              }}
+              .sub {{
+                font: 500 13px system-ui, -apple-system, Segoe UI, Roboto, Arial;
+                fill: #97a6ba;
+              }}
+            </style>
+          </defs>
+
+          <rect x="22" y="24" width="{w-44}" height="{h-48}" rx="18" fill="#0b1220" stroke="#1d2840" stroke-width="2"/>
+          <text x="48" y="56" class="title">DevOps Pulse</text>
+          <text x="48" y="76" class="sub">Animated pipeline signals (no stats)</text>
+
+          <g class="scan" filter="url(#glow)">
+            <rect x="-120" y="{y-34}" width="160" height="68" fill="url(#scanGrad)"/>
+          </g>
+          """
+
+          svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">
+          {scan}
+          <g>
+            {''.join(lines)}
+            {''.join(circles)}
+            {''.join(labels)}
+          </g>
+          </svg>
+          """
+
+          out_dir = root / "assets"
+          out_dir.mkdir(exist_ok=True)
+          out_path = out_dir / "devops-pulse.svg"
+          out_path.write_text(svg, encoding="utf-8")
+          print("Wrote", out_path)
+          PY
+
+      - name: Commit changes (if any)
+        run: |
+          if git diff --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "devops-pulse[bot]"
+          git config user.email "devops-pulse[bot]@users.noreply.github.com"
+          git add assets/devops-pulse.svg
+          git commit -m "chore: update devops pulse"
+          git push origin HEAD:main
