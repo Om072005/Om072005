@@ -67,7 +67,7 @@
 ###
 
 <div align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=Om072005&show_icons=true&hide=issues,prs&theme=dracula" />
+  <img src="https://streak-stats.demolab.com?user=Om072005&theme=dracula&hide_border=false&border_radius=5&cache_seconds=86400" />
 </div>
 
 ###
