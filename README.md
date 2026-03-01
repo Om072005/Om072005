@@ -72,7 +72,7 @@
 
 ###
 
-<img src="assets/devops-pulse.svg" width="800" alt="DevOps Pulse (pipeline status)"/>
+<img src="https://raw.githubusercontent.com/Om072005/Om072005/main/assets/devops-pulse.svg?v=2" alt="DevOps Pulse" />
 
 ###
 
