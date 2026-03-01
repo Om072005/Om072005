@@ -172,7 +172,7 @@ jobs:
 
           out_dir = root / "assets"
           out_dir.mkdir(exist_ok=True)
-          out_path = out_dir / "devops-pulse.svg"
+          out_path = out_dir / "devops-pulse-v2.svg"
           out_path.write_text(svg, encoding="utf-8")
           print("Wrote", out_path)
           PY
