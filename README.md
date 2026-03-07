@@ -72,7 +72,6 @@
 
 ###
 
-<img src="https://raw.githubusercontent.com/Om072005/Om072005/main/assets/workflow-retro.svg" alt="Workflow Retro" />
 
 ###
 
