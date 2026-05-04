@@ -121,10 +121,26 @@
 </div>
 
 ###
+<!--
+<p align="center">
+  <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=Om072005&show_icons=true&theme=radical" />
+</p>
+-->
 
-<div align="center">
-  <img src="https://streak-stats.demolab.com?user=Om072005&theme=dracula&hide_border=false&border_radius=5" />
-</div>
+<table width="100%">
+<tr>
+<td align="center" width="50%">
+
+<img src="https://streak-stats.demolab.com?user=Om072005&theme=radical&cache_seconds=1800" />
+
+</td>
+<td align="center" width="50%">
+
+<img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=Om072005&theme=react-dark&hide_title=true" />
+
+</td>
+</tr>
+</table>
 
 
 
