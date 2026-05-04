@@ -17,7 +17,7 @@
 
 ###
 
-<h4 align="left">I build applied AI systems — focused on computer vision and backend infrastructure that works outside the notebook. 
+<h4 align="left">I build applied AI systems focused on computer vision and backend infrastructure that works outside the notebook. 
   Currently a pre - final year student <br>Relevant coursework: Machine Learning · Artificial Intelligence · Pattern Recognition & Optimization</h4>
 
 ###
