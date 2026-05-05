@@ -106,7 +106,7 @@
 <tr>
 <td align="center" width="50%">
 
-<img src="https://streak-stats.demolab.com?user=Om072005&theme=radical&cache_seconds=1800" />
+![GitHub Streak Stats](https://raw.githubusercontent.com/Om072005/Om072005/main/streak.svg)
 
 </td>
 <td align="center" width="50%">
