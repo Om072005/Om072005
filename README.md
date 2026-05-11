@@ -6,7 +6,7 @@
   <a href="https://www.linkedin.com/in/om-manish-vibhute-616ab428b">
     <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/linkedin/default.svg" width="48" />
   </a>
-  <a href="mailto:omvibhute322@gmail.com">
+  <a href="https://mail.google.com/mail/u/0/?to=omvibhute322@gmail.com&fs=1&tf=cm">
     <img src="https://raw.githubusercontent.com/maurodesouza/profile-readme-generator/master/src/assets/icons/social/gmail/default.svg" width="48" />
   </a>
 </p>
