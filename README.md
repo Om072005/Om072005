@@ -18,9 +18,12 @@
 ###
 
 <h4 align="left">I build applied AI systems focused on computer vision and backend infrastructure that works outside the notebook. 
-  Currently a pre - final year student <br>Relevant coursework: Machine Learning · Artificial Intelligence · Pattern Recognition & Optimization</h4>
+  Currently a final year student <br>Relevant coursework: Machine Learning · Artificial Intelligence · Pattern Recognition & Optimization</h4>
 
 ###
+<h4 align="left">
+  AI Intern @ <a href="https://www.linkedin.com/in/arvanta-governance-4b7b843b6/">Arvanta Governance</a>
+</h4>
 
 <h6 align="center">Recognition</h6>
 
