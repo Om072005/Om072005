@@ -21,7 +21,7 @@
   Currently a final year student <br>Relevant coursework: Machine Learning · Artificial Intelligence · Pattern Recognition & Optimization</h4>
 
 ###
-<h4 align="left">
+<h4 align="center">
   AI Intern @ <a href="https://www.linkedin.com/in/arvanta-governance-4b7b843b6/">Arvanta Governance</a>
 </h4>
 
