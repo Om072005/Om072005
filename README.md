@@ -13,11 +13,11 @@
 
 ###
 
-<h3 align="left">Currently a Computer Science undergraduate (AI & ML) · Pune, India</h3>
+<h4 align="left">Currently a Computer Science undergraduate (AI & ML) · Pune, India</h4>
 
 ###
 
-<h4 align="left">Currently a final year student ,building applied AI systems focused on computer vision and backend infrastructure.</h4>
+<h4 align="left">Building applied AI systems focused on computer vision and backend infrastructure.</h4>
 
 ###
 <h4 align="left">
