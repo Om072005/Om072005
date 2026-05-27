@@ -20,9 +20,6 @@
 <h4 align="left">Building applied AI systems focused on computer vision and backend infrastructure.</h4>
 
 ###
-<h4 align="left">
-  AI Intern @ <a href="https://www.linkedin.com/in/arvanta-governance-4b7b843b6/">Arvanta Governance</a>
-</h4>
 
 <h6 align="center">Recognition</h6>
 
