@@ -25,7 +25,7 @@
 
 ###
 
-<p align="center">• Regional Finalist at IIT Bombay's eYantra Innovation Challenge (eYIC 2025 - 26). <br>• Secured 2nd Place at PCU Ideathon 3.0 for ‘RaySense’ demonstrating innovation in precision agriculture 2026. <br>• Secured 2nd Place at JSPM RSCOE Prakalp National Level Project Expo 2026. <br>• Secured 3rd Place at PCU BizNest’s BizQuest , understanding the core concern. <br>• College-Level Finalist at PCU Smart India Hackathon (Internal Round), 2025.</p>
+<p align="center">• Regional Finalist at IIT Bombay's eYantra Innovation Challenge (eYIC 2025 - 26). <br>• Secured 2nd Place at PCU Ideathon 3.0 for ‘RaySense’ demonstrating innovation in precision agriculture 2026. <br>• Secured 2nd Place at JSPM RSCOE Prakalp National Level Project Expo 2026. <br>• Secured 3rd Place at PCU BizNest’s BizQuest , understanding the core concern. <br>• College-Level Finalist at PCU Smart India Hackathon (Internal Round), 2025 and 2026.</p>
 
 ###
 <div>
