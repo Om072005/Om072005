@@ -104,14 +104,10 @@
 <table width="100%">
 <tr>
 <td align="center" width="50%">
-
-![GitHub Streak Stats](https://raw.githubusercontent.com/Om072005/Om072005/main/streak.svg)
-
+<img width="100%" src="https://raw.githubusercontent.com/Om072005/Om072005/main/streak.svg" alt="GitHub Streak" />
 </td>
 <td align="center" width="50%">
-
-<img width="100%" src="https://github-readme-activity-graph.vercel.app/graph?username=Om072005&theme=react-dark&hide_title=true" />
-
+<img width="100%" src="https://raw.githubusercontent.com/Om072005/Om072005/main/assets/activity.svg" alt="Activity Graph" />
 </td>
 </tr>
 </table>
