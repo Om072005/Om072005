@@ -100,17 +100,15 @@
   <img src="https://github-readme-stats-sigma-five.vercel.app/api?username=Om072005&show_icons=true&theme=radical" />
 </p>
 -->
-
+<div align = "center">
 <table width="100%">
 <tr>
 <td align="center" width="50%">
 <img width="100%" src="https://raw.githubusercontent.com/Om072005/Om072005/main/streak.svg" alt="GitHub Streak" />
 </td>
-<td align="center" width="50%">
-<img width="100%" src="https://raw.githubusercontent.com/Om072005/Om072005/main/assets/activity.svg" alt="Activity Graph" />
-</td>
 </tr>
 </table>
+</div>
 
 
 
