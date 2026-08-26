@@ -1,0 +1,73 @@
+name: Generate README SVGs
+
+on:
+  schedule:
+    # Runs daily at 00:30 UTC (06:00 IST). Avoid :00 — GitHub's scheduler is
+    # heavily congested on the hour and often delays or drops those runs.
+    - cron: "30 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch SVGs
+        env:
+          USERNAME: Om072005
+        run: |
+          mkdir -p assets
+
+          # Fetch a URL into a file, but ONLY overwrite the existing file if we
+          # got a real SVG back. This is the whole point: when the upstream
+          # service 402s / 429s / times out, we keep yesterday's good copy
+          # instead of committing an error page over it.
+          fetch() {
+            url="$1"
+            out="$2"
+            tmp="$(mktemp)"
+
+            code="$(curl -sSL \
+                      --max-time 45 \
+                      --retry 3 \
+                      --retry-delay 5 \
+                      --retry-all-errors \
+                      -w '%{http_code}' \
+                      -o "$tmp" \
+                      "$url" || echo 000)"
+
+            if [ "$code" = "200" ] && head -c 4000 "$tmp" | grep -qi '<svg'; then
+              mv "$tmp" "$out"
+              echo "::notice::updated $out"
+            else
+              rm -f "$tmp"
+              if [ -f "$out" ]; then
+                echo "::warning::$out — upstream returned HTTP $code, keeping existing copy"
+              else
+                echo "::error::$out — upstream returned HTTP $code and no cached copy exists"
+              fi
+            fi
+          }
+
+          fetch "https://streak-stats.demolab.com?user=${USERNAME}&theme=react&hide_border=true" \
+                "assets/streak.svg"
+
+          fetch "https://github-readme-activity-graph.vercel.app/graph?username=${USERNAME}&theme=react-dark&hide_title=true" \
+                "assets/activity.svg"
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/*.svg
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: refresh README SVGs [skip ci]"
+            git push
+          fi
