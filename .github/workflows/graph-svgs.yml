@@ -57,9 +57,6 @@ jobs:
           fetch "https://streak-stats.demolab.com?user=${USERNAME}&theme=react&hide_border=true" \
                 "assets/streak.svg"
 
-          fetch "https://github-readme-activity-graph.vercel.app/graph?username=${USERNAME}&theme=react-dark&hide_title=true" \
-                "assets/activity.svg"
-
       - name: Commit if changed
         run: |
           git config user.name  "github-actions[bot]"
