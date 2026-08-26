@@ -21,8 +21,8 @@ const C = {
   text: "#e6edf3",
   muted: "#8b949e",
   faint: "#484f58",
-  accent: "#fe428e",
-  ramp: ["#21262d", "#5c2340", "#7d3055", "#9e3d6a", "#c04a80", "#e15795", "#fe428e"],
+  accent: "#22d3ee",
+  ramp: ["#21262d", "#0e4f5c", "#116d7f", "#158ca3", "#19a9c4", "#1dc0de", "#22d3ee"],
 };
 
 const QUERY = `
